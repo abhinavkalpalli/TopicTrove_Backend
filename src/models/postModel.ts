@@ -18,13 +18,15 @@ const PostSchema = new Schema<Post>(
     description: { type: String, required: true },
     name: { type: String, required: true },
     photo: { type: String, required: true },
-    preference: [{ type: Schema.Types.ObjectId, ref: "Preferences", required: true }],
+    preference: [
+      { type: Schema.Types.ObjectId, ref: "Preferences", required: true },
+    ],
     block: [{ type: Schema.Types.ObjectId, ref: "Users" }],
     like: [{ type: Schema.Types.ObjectId, ref: "Users" }],
     dislike: [{ type: Schema.Types.ObjectId, ref: "Users" }],
     userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   },
-  { timestamps: true } // Enable timestamps
+  { timestamps: true } 
 );
 
 export default model<Post>("Posts", PostSchema);

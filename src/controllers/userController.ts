@@ -92,9 +92,9 @@ export default class userController implements IuserController {
         const password2 = data.password;
         const isMatch = await bcrypt.compare(password, password2);
         if (isMatch) {
-          const { email, firstName, photo, _id,preferences } = data;
+          const { email, firstName, photo, _id, preferences } = data;
           let tokens = await generateJwt(data as Payload);
-          let posts=[{}]
+          let posts = [{}];
           res.status(200).json({
             message: "User Logged in",
             email,
@@ -103,7 +103,7 @@ export default class userController implements IuserController {
             photo,
             _id,
             preferences,
-            posts
+            posts,
           });
         } else {
           res.status(402).json({ message: "Password did not match" });
@@ -242,7 +242,7 @@ export default class userController implements IuserController {
       const { name, description, photo, preference, userId } = req.body;
       const data = { name, description, photo, preference, userId };
       const post = await this._userService.createPost(data);
-      res.status(201).json({ message: "Post Created",post });
+      res.status(201).json({ message: "Post Created", post });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal Error" });
@@ -308,7 +308,7 @@ export default class userController implements IuserController {
     try {
       const { name, description, photo, preference, _id } = req.body;
       const postId = new Types.ObjectId(_id);
-      const data = { name, description, photo, preference, _id:postId };
+      const data = { name, description, photo, preference, _id: postId };
       const post = await this._userService.editPost(data);
       if (post) {
         res.status(200).json({ message: "Post Edited" });

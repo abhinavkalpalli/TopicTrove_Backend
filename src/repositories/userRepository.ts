@@ -130,14 +130,15 @@ export default class userRepository implements IuserRepository {
     try {
       await Users.findByIdAndUpdate(userId, { preferences }, { new: true });
       const query = {
-        ...(preferences && preferences.length > 0 && { preference: { $in: preferences } }),
+        ...(preferences &&
+          preferences.length > 0 && { preference: { $in: preferences } }),
         block: { $ne: userId },
       };
-      
+
       const posts = await Posts.find(query)
         .sort({ createdAt: -1 })
         .populate({ path: "userId", select: "firstName lastName photo" });
-      
+
       return posts;
     } catch (error) {
       throw error;
@@ -206,18 +207,18 @@ export default class userRepository implements IuserRepository {
   }
   async editPost(data: Partial<Post>): Promise<Post | null> {
     try {
-      const {_id,name,description,photo,preference}=data
-      const post=await Posts.findById(_id)
-      if(post){
-        post.name=name||''
-        post.description=description||''
-        post.photo=photo||''
-        post.preference=preference||[]
-        post.save()
+      const { _id, name, description, photo, preference } = data;
+      const post = await Posts.findById(_id);
+      if (post) {
+        post.name = name || "";
+        post.description = description || "";
+        post.photo = photo || "";
+        post.preference = preference || [];
+        post.save();
       }
-      return post
+      return post;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }
